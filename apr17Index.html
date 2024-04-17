@@ -59,7 +59,7 @@
                 return element;
             }
 
-            const stroeExpression = expression => {
+            const storeExpression = expression => {
                 localStorage.setItem(expression.id, JSON.strigify(expression.content));
             }
 
@@ -74,9 +74,25 @@
                         }
                     }
                     createExpression(expression);
-                    stroeExpression(expression);
+                    storeExpression(expression);
                     document.getElementById("inputExpression").value = "";
                 }
+            }
+
+            const loadExpression = () => {
+                Object
+                .keys(localStorage)
+                .forEach(key => {
+                    const content = JSON.parse(localStorage.getItem(key));
+
+                    if (Object.hasOwn(content, "text") && Object.hasOwn(content, "isDone")) {
+                        const expression = {
+                            id: key,
+                            content: content,
+                        };
+                        createExpression(expression)
+                    }
+                })
             }
 
 
