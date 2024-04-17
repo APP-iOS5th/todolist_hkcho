@@ -25,12 +25,20 @@
                 const itemContainerAttributes = {
                     "class": "list-group-item"
                 };
-                const checkBoxAttribute = {
+                const checkBoxAttributes =
+                checkBox.checked = isDone;
+                checkBox.onClick = event => {
+                    if (event.currentTarget.checked) {
+                        event.currentTarget.parentNode.classList.add("done");
+                    } else {
+                        event.currentTarget.parentNode.classList.remove("done");
+                    }
+                } {
                     "type": "checkbox",
                     "class": "form-check-input me-1",
                     "id": expression.id
                 }
-                const labelAttribute = {
+                const labelAttributes = {
                     "class": "form-check-label stretched-link",
                     "for": expression.id
                 }
@@ -41,13 +49,30 @@
                 itemContainer = configure(itemContainer, itemContainerAttributes);
 
                 var checkBox = document.createElement("input");
-                checkBox = configure(checkBox, checkBoxAttribute);
+                checkBox = configure(checkBox, checkBoxAttributes);
+                checkBox.checked = isDone;
+                checkBox.onClick = event => {
+                    if (event.currentTarget.checked) {
+                        event.currentTarget.parentNode.classList.add("done");
+                    } else {
+                        event.currentTarget.parentNode.classList.remove("done");
+                    }
+
+                    const expression = {
+                        id: id,
+                        content: {
+                            text: text,
+                            isDone: event.currentTarget.checked
+                        }
+                    }
+                    storeExpression(expression);
+                }
 
                 var label = document.createElement("label");
-                label = configure(label, labelAttribute);
-                label.onclik = event => {
-                    console.log(event);
-                };
+                label = configure(label, labelAttributes);
+                // label.onclik = event => {
+                //     console.log(event);
+                // };
                 label.textContent = expression.content;
 
                 itemContainer.appendChild(checkBox);
