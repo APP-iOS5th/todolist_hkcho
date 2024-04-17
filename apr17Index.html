@@ -10,21 +10,21 @@
     <body>
         <h1>Expressions for projects</h1>
         <input type="text" class="form-control" id="inputExpression" placeholder="add an new expression">
-        <button class="btn btn-primary" id="addExpression" onclick="onClick()">Add</button>
+        <button class="btn btn-primary" id="expression" onclick="onClick()">Add</button>
         <ul class="list-group" id="expressionList"></ul>
         <script>
-            const createExpression = addExpression => {
+            const createExpression = expression => {
                 const itemContainerAttributes = {
                     "class": "list-group-item"
                 };
                 const checkBoxAttribute = {
                     "type": "checkbox",
                     "class": "form-check-input me-1",
-                    "id": addExpression.id
+                    "id": expression.id
                 }
                 const labelAttribute = {
                     "class": "form-check-label stretched-link",
-                    "for": addExpression.id
+                    "for": expression.id
                 }
 
                 var list = document.getElementById("expressionList");
@@ -40,7 +40,7 @@
                 label.onclik = event => {
                     console.log(event);
                 };
-                label.textContent = addExpression.content;
+                label.textContent = expression.content;
 
                 itemContainer.appendChild(checkBox);
                 itemContainer.appendChild(label);
@@ -57,6 +57,26 @@
                 });
 
                 return element;
+            }
+
+            const stroeExpression = expression => {
+                localStorage.setItem(expression.id, JSON.strigify(expression.content));
+            }
+
+            const onClick = () => {
+                const text = document.getElementById("inputExpression").value;
+                if (text) {
+                    const expression = {
+                        id: crypto.randomUUID(),
+                        content: {
+                            text: text,
+                            isDone: false
+                        }
+                    }
+                    createExpression(expression);
+                    stroeExpression(expression);
+                    document.getElementById("inputExpression").value = "";
+                }
             }
 
 
