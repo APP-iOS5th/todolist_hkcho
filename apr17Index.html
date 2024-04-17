@@ -16,24 +16,24 @@
         <div class="container">
             <h1>Expressions for projects</h1>
             <input type="text" class="form-control" id="inputExpression" placeholder="add an new expression">
-            <button class="btn btn-primary" id="expression" onclick="onClick()">Add</button>
+            <button class="btn btn-primary" id="addExpression" onclick="onClick()">Add</button>
             <ul class="list-group" id="expressionList"></ul>
         </div>
 
         <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                loadExpression()
+            });
+
             const createExpression = expression => {
+                const id = expression.id;
+                const text = expression.content.text;
+                const isDone = expression.content.isDone;
+
                 const itemContainerAttributes = {
-                    "class": "list-group-item"
+                    "class": isDone ? "list-group-item done" : "list-group-item"
                 };
-                const checkBoxAttributes =
-                checkBox.checked = isDone;
-                checkBox.onClick = event => {
-                    if (event.currentTarget.checked) {
-                        event.currentTarget.parentNode.classList.add("done");
-                    } else {
-                        event.currentTarget.parentNode.classList.remove("done");
-                    }
-                } {
+                const checkBoxAttributes = {
                     "type": "checkbox",
                     "class": "form-check-input me-1",
                     "id": expression.id
@@ -70,9 +70,7 @@
 
                 var label = document.createElement("label");
                 label = configure(label, labelAttributes);
-                // label.onclik = event => {
-                //     console.log(event);
-                // };
+                
                 label.textContent = expression.content;
 
                 itemContainer.appendChild(checkBox);
@@ -83,11 +81,11 @@
 
             const configure = (element, attributes) => {
                 Object
-                .entries(attributes)
-                .forEach(entry => {
-                    const [key, value] = entry;
-                    element.setAttribute(key, value);
-                });
+                    .entries(attributes)
+                    .forEach(entry => {
+                        const [key, value] = entry;
+                        element.setAttribute(key, value);
+                    });
 
                 return element;
             }
@@ -114,18 +112,18 @@
 
             const loadExpression = () => {
                 Object
-                .keys(localStorage)
-                .forEach(key => {
-                    const content = JSON.parse(localStorage.getItem(key));
+                    .keys(localStorage)
+                    .forEach(key => {
+                        const content = JSON.parse(localStorage.getItem(key));
 
-                    if (Object.hasOwn(content, "text") && Object.hasOwn(content, "isDone")) {
-                        const expression = {
-                            id: key,
-                            content: content,
-                        };
-                        createExpression(expression)
-                    }
-                })
+                        if (Object.hasOwn(content, "text") && Object.hasOwn(content, "isDone")) {
+                            const expression = {
+                                id: key,
+                                content: content,
+                            };
+                            createExpression(expression)
+                        }
+                    });
             }
 
 
