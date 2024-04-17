@@ -13,10 +13,13 @@
         </style>
     </head>
     <body>
-        <h1>Expressions for projects</h1>
-        <input type="text" class="form-control" id="inputExpression" placeholder="add an new expression">
-        <button class="btn btn-primary" id="expression" onclick="onClick()">Add</button>
-        <ul class="list-group" id="expressionList"></ul>
+        <div class="container">
+            <h1>Expressions for projects</h1>
+            <input type="text" class="form-control" id="inputExpression" placeholder="add an new expression">
+            <button class="btn btn-primary" id="expression" onclick="onClick()">Add</button>
+            <ul class="list-group" id="expressionList"></ul>
+        </div>
+
         <script>
             const createExpression = expression => {
                 const itemContainerAttributes = {
